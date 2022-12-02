@@ -69,8 +69,8 @@ class User():
         else:
             return False
 
-user1=User('Adam','5201314','0')
-user2=User('1','1','0')
+user1=User('1','1','0')
+user2=User('2','2','0')
 
 
 

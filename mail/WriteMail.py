@@ -17,8 +17,33 @@ class writeMailWindow(Tk):
 
     def setup_UI(self):
         self.Label_addressee = Label(self, text="收件人:", style="user.TLabel")
-        self.Label_addressee.pack(side = LEFT,padx = 20,pady = 20)
+        self.Label_content = Label(self, text="内容:", style="user.TLabel")
+
         self.Entry_addressee = Entry(self,width = 24)
-        self.Entry_addressee.pack(side = LEFT,padx = 20,pady = 20)
-        self.writetext = Text(self, height=100, width=150)
-        showinfo(message='the password is error')  # password错误处理函数
+
+        self.writetext = Text(self, height=20, width=100)
+
+        self.Button_send = Button(self, text="发送", width=20, command=self.SendMail)  ###绑定函数
+
+
+        #布局
+
+        self.Label_addressee.grid(row=0, column=0,sticky='nw', ipadx=5)
+        self.Entry_addressee.grid(row=0, column=1,sticky='w')
+        self.Label_content.grid(row=1, column=0, sticky='nw', ipadx=5)
+        self.writetext.grid(row=2, column=0, sticky=E,columnspan=2,padx=20,pady=20,ipadx=8)
+        self.Button_send.grid(row=3, column=1, sticky=E,pady=20,ipadx=5)
+       # showinfo(message='the password is error')  # password错误处理函数
+    def SendMail(self):
+        receiver=self.Entry_addressee.get()
+        content=self.writetext.get('1.0','end')
+        if receiver!='2':
+            showinfo(message='can not find the receiver')
+        else:
+            self.writetext.delete('1.0',"end")
+            showinfo(message='send successfully!')
+            str=receiver+'.txt'
+            f = open(str,'a')
+            content=content+'\n'
+            f.write(content)
+            f.close()
