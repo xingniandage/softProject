@@ -59,23 +59,25 @@ class loginPresenter(IonLoginFinishedListener):
 
 
 class User():
-    def __init__(self,name,pw):
+    def __init__(self,name,pw,ismail):
         self.name=name
         self.pw=pw
+        self.ismail=ismail  #是否有邮件
     def isLogin(self,user):
         if self.name==user.name and self.pw==user.pw:
             return True
         else:
             return False
 
-user1=User('Adam','5201314')
-user2=User('Eva','414414')
+user1=User('Adam','5201314','0')
+user2=User('1','1','0')
 
 
 
 class LoginWindow(Tk):
     """
     创建登录窗体的GUI界面已经登录的方法
+
     """
     def __init__(self):
         super().__init__()  # 先执行tk这个类的初始化
@@ -87,16 +89,20 @@ class LoginWindow(Tk):
         # 加载窗体
         self.setup_UI()
 
+#####这是页面#####
+
     def setup_UI(self):
         # ttk中控件使用style对象设定
         self.Style01 = Style()
         self.Style01.configure("user.TLabel",font = ("华文黑体",20,"bold"),foreground = "royalblue")
         self.Style01.configure("TEntry",font = ("华文黑体",20,"bold"))
         self.Style01.configure("TButton",font = ("华文黑体",20,"bold"),foreground = "royalblue")
+
         # 创建一个Label标签展示图片
         self.Login_image = ImageTk.PhotoImage(file = "."+os.sep+"img"+os.sep+"bg2.jpg")
         self.Label_image = Label(self,image = self.Login_image)
         self.Label_image.pack(padx = 10,pady = 10)
+
         # 创建一个Label标签 + Entry   --- 用户名
         self.Label_user = Label(self,text = "用户名:", style = "user.TLabel")
         self.Label_user.pack(side = LEFT,padx = 20,pady = 20)
@@ -108,8 +114,10 @@ class LoginWindow(Tk):
         self.Entry_password = Entry(self, width=24,show = "*")
         self.Entry_password.pack(side = LEFT,padx = 20,pady = 20)
         # 创建一个按钮    --- 登录
-        self.Button_login = Button(self,text = "登录",width = 4,command=self.login)
+        self.Button_login = Button(self,text = "登录",width = 4,command=self.login)###绑定函数
         self.Button_login.pack(side = LEFT,padx = 40,pady = 20)
+
+####这是逻辑#####
     def login(self):
         user = self.Entry_user.get()
         password = self.Entry_password.get()
@@ -124,4 +132,4 @@ class LoginWindow(Tk):
 
 if __name__ == '__main__':
     this_login = LoginWindow()
-    this_login.mainloop()
+    this_login.mainloop()  ###循环执行函数，监听是否有变化
