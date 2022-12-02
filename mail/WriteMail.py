@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.messagebox import showinfo
 from tkinter.ttk import *
+import global_var#引入全局变量文件
 from PIL import Image, ImageTk
 import os
 from abc import ABCMeta,abstractmethod
@@ -37,13 +38,15 @@ class writeMailWindow(Tk):
     def SendMail(self):
         receiver=self.Entry_addressee.get()
         content=self.writetext.get('1.0','end')
-        if receiver!='2':
+        user = global_var.get_value('user')
+        print(user)
+        if (receiver!='2') and (receiver!='1'):
             showinfo(message='can not find the receiver')
         else:
             self.writetext.delete('1.0',"end")
-            showinfo(message='send successfully!')
             str=receiver+'.txt'
             f = open(str,'a')
-            content=content+'\n'
+            content=user+content#信件格式发件人姓名+内容
             f.write(content)
             f.close()
+            showinfo(message='send successfully!')

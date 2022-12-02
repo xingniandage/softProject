@@ -6,8 +6,8 @@ import os
 from abc import ABCMeta,abstractmethod
 
 import Home
-
-
+import global_var#引入全局变量文件
+global user
 class IloginView(object):
     __metaclass__ = ABCMeta
     @abstractmethod
@@ -89,6 +89,7 @@ class LoginWindow(Tk):
         # 加载窗体
         self.setup_UI()
 
+
 #####这是页面#####
 
     def setup_UI(self):
@@ -119,17 +120,21 @@ class LoginWindow(Tk):
 
 ####这是逻辑#####
     def login(self):
-        user = self.Entry_user.get()
+        #全局变量
+
+        user= self.Entry_user.get()
         password = self.Entry_password.get()
         if loginPresenter.onUserNameError(self,user):
             loginActivity.setUserNameError(self)
             if loginPresenter.onPasswordError(self,user,password):
                 loginActivity.setPasswordError(self)
         if loginPresenter.onSuccess(self,user,password):
+            global_var.set_value('user', user)
             self.destroy()
             loginActivity.navigateToHome(self)#执行此函数
 
 
 if __name__ == '__main__':
+    global_var._init()
     this_login = LoginWindow()
     this_login.mainloop()  ###循环执行函数，监听是否有变化
