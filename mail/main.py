@@ -30,14 +30,14 @@ class IonLoginFinishedListener(object):
 
 class loginActivity(IloginView):
     def setPasswordError(self):
-        showinfo(message='the password is error')
+        showinfo(message='the password is error')#password错误处理函数
 
     def setUserNameError(self):
-        showinfo(message='the user is invalid')
+        showinfo(message='the user is invalid')#user错误处理函数
 
     def navigateToHome(self):
         if __name__ == '__main__':
-            home_window = Home.HomeWindow()
+            home_window = Home.HomeWindow()#跳转到home函数
 
 class loginPresenter(IonLoginFinishedListener):
     def onUserNameError(self,user):
@@ -119,7 +119,7 @@ class LoginWindow(Tk):
                 loginActivity.setPasswordError(self)
         if loginPresenter.onSuccess(self,user,password):
             self.destroy()
-            loginActivity.navigateToHome(self)
+            loginActivity.navigateToHome(self)#执行此函数
 
 
 if __name__ == '__main__':
