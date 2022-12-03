@@ -4,10 +4,10 @@ from tkinter.ttk import *
 from PIL import Image, ImageTk
 import os
 from abc import ABCMeta,abstractmethod
-
-import Home
 import global_var#引入全局变量文件
-global user
+import Home
+
+
 class IloginView(object):
     __metaclass__ = ABCMeta
     @abstractmethod
@@ -35,43 +35,92 @@ class loginActivity(IloginView):
     def setUserNameError(self):
         showinfo(message='the user is invalid')#user错误处理函数
 
-    def navigateToHome(self):
+    def navigateToHome(self,ismanager):
         if __name__ == '__main__':
-            home_window = Home.HomeWindow()#跳转到home函数
+            home_window = Home.HomeWindow(ismanager)#跳转到home函数
 
 class loginPresenter(IonLoginFinishedListener):
     def onUserNameError(self,user):
-        if (user != user1.name) and (user != user2.name):
+        if (user != user1.name) and (user != user2.name) and (user !=manager.name):
             return True
         else:
             return False
     def onPasswordError(self,user,password):
-        if ((user == user1.name) and (password != user1.pw)) or ((user == user2.name) and (password != user2.pw)):
+        if ((user == manager.name) and (password != manager.pw) or (user == user1.name) and (password != user1.pw)) or ((user == user2.name) and (password != user2.pw)):
             return True
         else:
             return False
     def onSuccess(self,user,password):
         if (user == user1.name and password == user1.pw) or (user == user2.name and password == user2.pw):
-            return True
+            return 1
+        elif (user == manager.name and password == manager.pw):
+            return 0
         else:
-            return False
+            return -1
 
 
 
 class User():
-    def __init__(self,name,pw,ismail):
+    def __init__(self,name,pw,ismail,issent):
         self.name=name
         self.pw=pw
+        self.ismanager=0
         self.ismail=ismail  #是否有邮件
+        self.issent=issent  #是否被冻结
     def isLogin(self,user):
         if self.name==user.name and self.pw==user.pw:
             return True
         else:
             return False
 
-user1=User('1','1','0')
-user2=User('2','2','0')
+class Manager(User):
+    def __init__(self,name,pw,counters,counternum):
+        self.name=name
+        self.pw=pw
+        self.ismanager=1
+        self.counters=counters
+        self.couternum=counternum
+        self.countername=[]
+        for i in self.counters:
+            self.countername.append(i.name)
+        
+    def addcounter(self,user):#添加成员
+        if user in self.counters:
+            return False
+        else:
+            self.counters.append(user)
+            self.countername.append(user.name)
+            self.couternum+=1
+            return True
+    
+    def dlcounter(self,user):#删除成员
+        if user in self.counters:
+            self.counters.remove(user)
+            self.countername.remove(user.name)
+            self.couternum-=1
+            return True
+        else:
+            return False
 
+    def initcounter(self,user):#删除用户邮件
+        if user in self.counters:
+            str=user.name+'.txt'
+            f=open(str,'w')
+            f.truncate()
+            f.close
+            user.ismail=0
+            user.ismail=0
+            return True
+        else:
+            return False
+    
+
+
+
+user1=User('1','1','0','1')
+user2=User('2','2','0','1')
+users={'1':user1,'2':user2}
+manager=Manager('3','3',[user2],1)
 
 
 class LoginWindow(Tk):
@@ -88,7 +137,6 @@ class LoginWindow(Tk):
         # self["bg"] = "royalblue"
         # 加载窗体
         self.setup_UI()
-
 
 #####这是页面#####
 
@@ -120,18 +168,19 @@ class LoginWindow(Tk):
 
 ####这是逻辑#####
     def login(self):
-        #全局变量
-
-        user= self.Entry_user.get()
+        user = self.Entry_user.get()
         password = self.Entry_password.get()
         if loginPresenter.onUserNameError(self,user):
             loginActivity.setUserNameError(self)
             if loginPresenter.onPasswordError(self,user,password):
                 loginActivity.setPasswordError(self)
-        if loginPresenter.onSuccess(self,user,password):
+        if loginPresenter.onSuccess(self,user,password)==1:
             global_var.set_value('user', user)
             self.destroy()
-            loginActivity.navigateToHome(self)#执行此函数
+            loginActivity.navigateToHome(self,ismanager=0)#执行此函数
+        if loginPresenter.onSuccess(self,user,password)==0:
+            self.destroy()
+            loginActivity.navigateToHome(self,ismanager=1)
 
 
 if __name__ == '__main__':
