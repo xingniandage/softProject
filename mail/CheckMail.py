@@ -79,13 +79,14 @@ class CheckMailWindow(Tk):
             content=linecache.getline(r'1.txt', nownum)
         if nownum <=row_len and strname=='2.txt':
             content = linecache.getline(r'2.txt', nownum)
-        if len(content)>0:
+        if len(content)>len(user)-1:
             self.Text_addressee.delete('1.0',"end")
             self.Text_num.delete('1.0',"end")
             self.writetext.delete('1.0',"end")
 
-            self.Text_addressee.insert('insert', content[:1])
+
+            self.Text_addressee.insert('insert', content[:len(user)])
             self.Text_num.insert('insert', str(nownum))
-            self.writetext.insert('insert', content[1:])
+            self.writetext.insert('insert', content[len(user):])
         if nownum > row_len:
             showinfo(message='read over')
