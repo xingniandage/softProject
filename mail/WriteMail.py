@@ -12,24 +12,32 @@ class writeMailWindow(Tk):
         self.title("写邮件")
         self.geometry("900x640+180+80")
         self.resizable(0, 0)# 窗体大小不允许变，两个参数分别代表x轴和y轴
-        self["bg"] = "white"
+        self.canvas = Canvas(self, highlightthickness=0)
+        self.canvas.place(width=900, height=640)
+        bg = PhotoImage(file='img/bg4.png')
+        self.canvas.create_image(450, 320, image=bg)
 
         self.setup_UI()
+        self.mainloop()
 
     def setup_UI(self):
+        self.Style01 = Style()
+        self.Style01.configure("user.TLabel", font=("华文黑体", 20, "bold"), foreground="royalblue")
+        self.Style01.configure("TEntry", font=("华文黑体", 20, "bold"))
+        self.Style01.configure("TButton", font=("华文黑体", 20, "bold"), foreground="royalblue")
         self.Label_addressee = Label(self, text="收件人:", style="user.TLabel")
         self.Label_content = Label(self, text="内容:", style="user.TLabel")
 
-        self.Entry_addressee = Entry(self,width = 24)
+        self.Entry_addressee = Entry(self,width = 24,style='TEntry')
 
         self.writetext = Text(self, height=20, width=100)
 
-        self.Button_send = Button(self, text="发送", width=20, command=self.SendMail)  ###绑定函数
+        self.Button_send = Button(self, text="发送", width=10, command=self.SendMail,style='TButton')  ###绑定函数
 
 
         #布局
 
-        self.Label_addressee.grid(row=0, column=0,sticky='nw', ipadx=5)
+        self.Label_addressee.grid(row=0, column=0,sticky='w', ipadx=5)
         self.Entry_addressee.grid(row=0, column=1,sticky='w')
         self.Label_content.grid(row=1, column=0, sticky='nw', ipadx=5)
         self.writetext.grid(row=2, column=0, sticky=E,columnspan=2,padx=20,pady=20,ipadx=8)

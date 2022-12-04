@@ -13,26 +13,34 @@ class manageMailWindow(Tk):
         self.title("管理")
         self.geometry("900x640+180+80")
         self.resizable(0, 0)# 窗体大小不允许变，两个参数分别代表x轴和y轴
-        self["bg"] = "white"
+        self.canvas = Canvas(self, highlightthickness=0)
+        self.canvas.place(width=900, height=640)
+        bg = PhotoImage(file='img/bg3.png')
+        self.canvas.create_image(450, 320, image=bg)
         self.setup_UI()
+        self.mainloop()
 
     def setup_UI(self):
+        self.Style01 = Style()
+        self.Style01.configure("user.TLabel", font=("华文黑体", 20, "bold"), foreground="royalblue")
+        self.Style01.configure("TEntry", font=("华文黑体", 20, "bold"))
+        self.Style01.configure("TButton", font=("华文黑体", 20, "bold"), foreground="royalblue")
         self.Label_addressee = Label(self, text="成员名：", style="user.TLabel")
         self.Label_addressee1 = Label(self, text="状态：", style="user.TLabel")
         self.Label_content = Label(self, text="内容:", style="user.TLabel")
 
-        self.Entry_addressee = Entry(self,width = 24)
-        self.Entry_addressee1 = Entry(self,width = 10)
+        self.Entry_addressee = Entry(self,width = 24,style='TEntry')
+        self.Entry_addressee1 = Entry(self,width = 10,style='TEntry')
 
 
         self.writetext = Text(self, height=20, width=100)
 
-        self.Button_check =Button(self,text="查询",width=20, command=self.check)
-        self.Button_delet =Button(self,text="删除用户",width=20, command=self.delet)
-        self.Button_add =Button(self,text="添加用户",width=20, command=self.addcounter)
-        self.Button_block =Button(self,text="冻结用户",width=20, command=self.block)
-        self.Button_unblock =Button(self,text="解冻用户",width=20, command=self.unblock)
-        self.Button_initmail =Button(self,text="清空邮箱",width=20, command=self.initmail)
+        self.Button_check =Button(self,text="查询",width=10, command=self.check)
+        self.Button_delet =Button(self,text="删除用户",width=10, command=self.delet)
+        self.Button_add =Button(self,text="添加用户",width=10, command=self.addcounter)
+        self.Button_block =Button(self,text="冻结用户",width=10, command=self.block)
+        self.Button_unblock =Button(self,text="解冻用户",width=10, command=self.unblock)
+        self.Button_initmail =Button(self,text="清空邮箱",width=10, command=self.initmail)
 
         #布局
 
@@ -42,12 +50,12 @@ class manageMailWindow(Tk):
         self.Entry_addressee1.grid(row=1, column=1,sticky='w')
         self.Label_content.grid(row=2, column=0, sticky='nw', ipadx=5)
         self.writetext.grid(row=3, column=0, sticky=E,columnspan=2,padx=20,pady=20,ipadx=8)
-        self.Button_check.grid(row=6, column=1, sticky=E,pady=20,ipadx=5)
-        self.Button_initmail.grid(row=6, column=0, sticky=E,pady=20,ipadx=5)
-        self.Button_delet.grid(row=4, column=0, sticky=E,pady=20,ipadx=5)
-        self.Button_add.grid(row=4, column=1, sticky=E,pady=20,ipadx=5)
-        self.Button_block.grid(row=5, column=0, sticky=E,pady=20,ipadx=5)
-        self.Button_unblock.grid(row=5, column=1, sticky=E,pady=20,ipadx=5)
+        self.Button_check.grid(row=6, column=1, sticky='w',pady=20,ipadx=5)
+        self.Button_initmail.grid(row=6, column=0, sticky='w',pady=20,ipadx=5)
+        self.Button_delet.grid(row=4, column=0, sticky='w',pady=20,ipadx=5)
+        self.Button_add.grid(row=4, column=1, sticky='w',pady=20,ipadx=5)
+        self.Button_block.grid(row=5, column=0, sticky='w',pady=20,ipadx=5)
+        self.Button_unblock.grid(row=5, column=1, sticky='w',pady=20,ipadx=5)
        # showinfo(message='the password is error')  # password错误处理函数
     def SendMail(self):
         receiver=self.Entry_addressee.get()

@@ -12,11 +12,18 @@ class CheckMailWindow(Tk):
         self.title("主页")
         self.geometry("900x640+180+80")
         self.resizable(0, 0)# 窗体大小不允许变，两个参数分别代表x轴和y轴
-        self["bg"] = "white"
+        self.canvas = Canvas(self, highlightthickness=0)
+        self.canvas.place(width=900, height=640)
+        bg = PhotoImage(file='img/bg4.png')
+        self.canvas.create_image(450, 320, image=bg)
         self.setup_UI()
+        self.mainloop()
 
     def setup_UI(self):
-
+        self.Style01 = Style()
+        self.Style01.configure("user.TLabel", font=("华文黑体", 20, "bold"), foreground="royalblue")
+        self.Style01.configure("TEntry", font=("华文黑体", 20, "bold"))
+        self.Style01.configure("TButton", font=("华文黑体", 20, "bold"), foreground="royalblue")
         self.Label_SumNum=Label(self,text="信件总数:", style="user.TLabel")
         self.Text_SumNum = Text(self, height=1,width=24)
         self.Label_num=Label(self,text="信件编号:", style="user.TLabel")
@@ -26,10 +33,17 @@ class CheckMailWindow(Tk):
         self.Label_content = Label(self, text="内容:", style="user.TLabel")
         self.writetext = Text(self, height=20, width=100)
 
+<<<<<<< Updated upstream
         self.Button_send = Button(self, text="下一条", width=20, command=self.NextMail)  ###绑定函数
 
         self.SendFolder = Button(self,text="发件箱",width=20,command=self.SendFolder)
         self.ReceiveFolder = Button(self, text = "收件箱",width = 20,command=self.ReceiveFolder)
+=======
+        self.Button_send = Button(self, text="下一条", width=10, command=self.NextMail,style='TButton')  ###绑定函数
+
+        self.SendFolder = Button(self,text="发件箱",width=10,command=self.SendFolder,style='TButton')
+        self.ReceiveFolder = Button(self, text = "收件箱",width = 10,command=self.ReceiveFolder,style='TButton')
+>>>>>>> Stashed changes
 
 
         # 布局
@@ -41,7 +55,10 @@ class CheckMailWindow(Tk):
         self.Text_addressee.grid(row=2, column=1, sticky='w')
         self.Label_content.grid(row=3, column=0, sticky='nw', ipadx=5)
         self.writetext.grid(row=4, column=0, sticky=E, columnspan=2, padx=20, pady=20, ipadx=8)
-        self.Button_send.grid(row=5, column=1, sticky=E, pady=20, ipadx=5)
+        self.Button_send.grid(row=5, column=1, sticky=W, pady=20, ipadx=5)
+
+        self.SendFolder.grid(row=6,column=0,sticky=W,pady=20,ipadx=8)
+        self.ReceiveFolder.grid(row=6, column=1, sticky=W, pady=20, ipadx=8)
 
         self.SendFolder.grid(row=6,column=0,sticky=E,pady=20,ipadx=8)
         self.ReceiveFolder.grid(row=6, column=1, sticky=E, pady=20, ipadx=8)
@@ -147,6 +164,8 @@ class CheckMailWindow(Tk):
             fobj = open('1.txt', 'r')
             row_len = len(fobj.readlines())
             fobj.close()
+<<<<<<< Updated upstream
+=======
         else:
             showinfo(message='user is error')
 
@@ -173,6 +192,7 @@ class CheckMailWindow(Tk):
             fobj = open('1.txt', 'r')
             row_len = len(fobj.readlines())
             fobj.close()
+>>>>>>> Stashed changes
         else:
             showinfo(message='user is error')
 
@@ -183,5 +203,34 @@ class CheckMailWindow(Tk):
 
         self.Text_SumNum.insert('insert', str(row_len))
         self.Text_addressee.insert('insert', "")
+<<<<<<< Updated upstream
+        self.Text_num.insert('insert',"0")
+        self.writetext.insert('insert', "")
+
+    def ReceiveFolder(self):
+
+        global_var.set_value('folder', 'ReceiveFolder')
+        print("现在是收件箱...")
+        user = global_var.get_value('user')
+        if user == '1':
+            fobj = open('1.txt', 'r')
+            row_len = len(fobj.readlines())
+            fobj.close()
+        elif user == '1':
+            fobj = open('1.txt', 'r')
+            row_len = len(fobj.readlines())
+            fobj.close()
+        else:
+            showinfo(message='user is error')
+
+        self.Text_SumNum.delete('1.0', "end")
+        self.Text_addressee.delete('1.0', "end")
+        self.Text_num.delete('1.0', "end")
+        self.writetext.delete('1.0', "end")
+
+        self.Text_SumNum.insert('insert', str(row_len))
+        self.Text_addressee.insert('insert', "")
+=======
+>>>>>>> Stashed changes
         self.Text_num.insert('insert', "0")
         self.writetext.insert('insert', "")
