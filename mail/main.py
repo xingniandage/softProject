@@ -17,6 +17,8 @@ class IloginView(object):
         pass
     def navigateToHome(self):
         pass
+    def setUserBlockError(self):
+        pass
 
 class IonLoginFinishedListener(object):
     __metaclass__ = ABCMeta
@@ -31,6 +33,9 @@ class IonLoginFinishedListener(object):
 class loginActivity(IloginView):
     def setPasswordError(self):
         showinfo(message='the password is error')#password错误处理函数
+
+    def setUserBlockError(self):
+        showinfo(message='user has been blocking')
 
     def setUserNameError(self):
         showinfo(message='the user is invalid')#user错误处理函数
@@ -119,8 +124,9 @@ class Manager(User):
 
 user1=User('1','1','0','1')
 user2=User('2','2','0','1')
-users={'1':user1,'2':user2}
-manager=Manager('3','3',[user2],1)
+user3=User('3','3','0','0')
+users={'1':user1,'2':user2,'3':user3}
+manager=Manager('0','0',[user2],1)
 
 
 class LoginWindow(Tk):
@@ -176,8 +182,11 @@ class LoginWindow(Tk):
                 loginActivity.setPasswordError(self)
         if loginPresenter.onSuccess(self,user,password)==1:
             global_var.set_value('user', user)
-            self.destroy()
-            loginActivity.navigateToHome(self,ismanager=0)#执行此函数
+            if (users[user].issent == '0'):
+                loginActivity.setUserBlockError(self)
+            else:
+                self.destroy()
+                loginActivity.navigateToHome(self,ismanager=0)#执行此函数
         if loginPresenter.onSuccess(self,user,password)==0:
             self.destroy()
             loginActivity.navigateToHome(self,ismanager=1)
