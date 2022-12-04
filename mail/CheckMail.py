@@ -26,9 +26,23 @@ class CheckMailWindow(Tk):
         self.Label_content = Label(self, text="内容:", style="user.TLabel")
         self.writetext = Text(self, height=20, width=100)
 
+<<<<<<< Updated upstream
         self.Button_send = Button(self, text="下一条", width=20, command=self.NextMail)  ###绑定函数
 
 
+=======
+# <<<<<<< Updated upstream
+#         self.Button_send = Button(self, text="下一条", width=20, command=self.NextMail)  ###绑定函数
+#
+#         self.SendFolder = Button(self,text="发件箱",width=20,command=self.SendFolder)
+#         self.ReceiveFolder = Button(self, text = "收件箱",width = 20,command=self.ReceiveFolder)
+# =======
+#         self.Button_send = Button(self, text="下一条", width=10, command=self.NextMail,style='TButton')  ###绑定函数
+#
+#         self.SendFolder = Button(self,text="发件箱",width=10,command=self.SendFolder,style='TButton')
+#         self.ReceiveFolder = Button(self, text = "收件箱",width = 10,command=self.ReceiveFolder,style='TButton')
+# >>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
         # 布局
