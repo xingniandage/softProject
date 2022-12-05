@@ -94,7 +94,7 @@ class manageMailWindow(Tk):
         print(deleter)
         if deleter in manager.countername:
             index=manager.countername.index(deleter)
-            manager.rmcounter(manager.counters(index))
+            manager.rmcounter(manager.counters[index])
             showinfo(message='Delete successfully!')
         else:
             showinfo(message='No access')
@@ -140,7 +140,7 @@ class manageMailWindow(Tk):
         print(initmailer)
         if initmailer in manager.countername:
             index=manager.countername.index(initmailer)
-            if manager.initcounter(manager.counters(index))==1:
+            if manager.initcounter(manager.counters[index])==1:
                 showinfo(message='Init successfully!')
             else :
                 showinfo(message='Init fail!')

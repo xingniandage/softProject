@@ -101,19 +101,22 @@ class Manager(User):
             return True
         else:
             return False
-
-    def initcounter(self,user):#删除用户邮件
+    def initcounter(self, user):
         if user in self.counters:
-            str=user.name+'.txt'
-            f=open(str,'w')
+            str = user.name + '.txt'
+            f = open(str, 'r+')
             f.truncate()
             f.close
-            user.ismail=0
-            user.ismail=0
+            user.ismail = 0
+            user.ismail = 0
             return True
         else:
             return False
-    
+
+    def rmcounter(self, user):# 删除用户邮件
+        self.couternum -= 1
+        self.counters.remove(user)
+        self.countername.remove(user.name)
 
 
 
