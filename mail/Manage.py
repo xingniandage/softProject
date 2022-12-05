@@ -33,7 +33,7 @@ class manageMailWindow(Tk):
         self.Entry_addressee1 = Entry(self,width = 10,style='TEntry')
 
 
-        self.writetext = Text(self, height=20, width=100)
+        self.writetext = Text(self, height=12, width=100)
 
         self.Button_check =Button(self,text="查询",width=10, command=self.check)
         self.Button_delet =Button(self,text="删除用户",width=10, command=self.delet)
@@ -50,12 +50,14 @@ class manageMailWindow(Tk):
         self.Entry_addressee1.grid(row=1, column=1,sticky='w')
         self.Label_content.grid(row=2, column=0, sticky='nw', ipadx=5)
         self.writetext.grid(row=3, column=0, sticky=E,columnspan=2,padx=20,pady=20,ipadx=8)
-        self.Button_check.grid(row=6, column=1, sticky='w',pady=20,ipadx=5)
-        self.Button_initmail.grid(row=6, column=0, sticky='w',pady=20,ipadx=5)
-        self.Button_delet.grid(row=4, column=0, sticky='w',pady=20,ipadx=5)
-        self.Button_add.grid(row=4, column=1, sticky='w',pady=20,ipadx=5)
-        self.Button_block.grid(row=5, column=0, sticky='w',pady=20,ipadx=5)
-        self.Button_unblock.grid(row=5, column=1, sticky='w',pady=20,ipadx=5)
+        self.Button_check.grid(row=6, column=1, sticky='w',pady=20,ipadx=5,padx=80)
+
+        self.Button_initmail.grid(row=6, column=0, sticky='w',pady=20,ipadx=5,padx=80)
+
+        self.Button_delet.grid(row=4, column=0, sticky='w',pady=20,ipadx=5,padx=80)
+        self.Button_add.grid(row=4, column=1, sticky='w',pady=20,ipadx=5,padx=80)
+        self.Button_block.grid(row=5, column=0, sticky='w',pady=20,ipadx=5,padx=80)
+        self.Button_unblock.grid(row=5, column=1, sticky='w',pady=20,ipadx=5,padx=80)
        # showinfo(message='the password is error')  # password错误处理函数
     def SendMail(self):
         receiver=self.Entry_addressee.get()
