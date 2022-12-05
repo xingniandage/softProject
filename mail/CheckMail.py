@@ -33,7 +33,11 @@ class CheckMailWindow(Tk):
         self.Label_content = Label(self, text="内容:", style="user.TLabel")
         self.writetext = Text(self, height=20, width=100)
 
+# <<<<<<< HEAD
 # <<<<<<< Updated upstream
+# =======
+        self.Button_Pre = Button(self, text="上一条", width=20, command=self.PreMail)
+# >>>>>>> Dev
         self.Button_send = Button(self, text="下一条", width=20, command=self.NextMail)  ###绑定函数
 
         self.SendFolder = Button(self,text="发件箱",width=20,command=self.SendFolder)
@@ -50,6 +54,12 @@ class CheckMailWindow(Tk):
         self.Text_addressee.grid(row=2, column=1, sticky='w')
         self.Label_content.grid(row=3, column=0, sticky='nw', ipadx=5)
         self.writetext.grid(row=4, column=0, sticky=E, columnspan=2, padx=20, pady=20, ipadx=8)
+# <<<<<<< HEAD
+# =======
+
+        self.Button_Pre.grid(row=5, column=0, sticky=E, pady=20, ipadx=5)
+        self.Button_send.grid(row=5, column=1, sticky=E, pady=20, ipadx=5)
+# >>>>>>> Dev
 
 
         self.Button_send.grid(row=5, column=1, sticky=W, pady=20, ipadx=5)
@@ -93,8 +103,9 @@ class CheckMailWindow(Tk):
             nownum = self.Text_num.get('1.0', 'end')
 
             nownum = int(nownum)
-            print(nownum)
             nownum += 1
+            print(nownum)
+
 
             content = ''
             if nownum <= row_len and strname == '1.txt':
@@ -128,8 +139,8 @@ class CheckMailWindow(Tk):
             nownum = self.Text_num.get('1.0', 'end')
 
             nownum = int(nownum)
-            print(nownum)
             nownum += 1
+            print(nownum)
 
             content = ''
             if nownum <= row_len and strname == '1.txt':
@@ -145,6 +156,78 @@ class CheckMailWindow(Tk):
                 self.Text_num.insert('insert', str(nownum))
                 self.writetext.insert('insert', content[1:])
             if nownum > row_len:
+                showinfo(message='read over')
+
+    def PreMail(self):
+
+        if (global_var.get_value("folder") == "sendFolder"):
+            # print("进入发件箱了...")
+
+            strname = ''
+            user = global_var.get_value('user')
+            if user == '1':
+                strname = '2.txt'
+            elif user == '2':
+                strname = '1.txt'
+            else:
+                showinfo(message='user is error')
+            fobj = open(strname, 'r')
+            row_len = len(fobj.readlines())
+            nownum = self.Text_num.get('1.0', 'end')
+
+            nownum = int(nownum)
+            nownum -= 1
+            print(nownum)
+
+            content = ''
+            if nownum >= 0 and strname == '1.txt':
+                content = linecache.getline(r'1.txt', nownum)
+            if nownum >= 0 and strname == '2.txt':
+                content = linecache.getline(r'2.txt', nownum)
+            if len(content) > 0:
+                self.Text_addressee.delete('1.0', "end")
+                self.Text_num.delete('1.0', "end")
+                self.writetext.delete('1.0', "end")
+
+                self.Text_addressee.insert('insert', content[:1])
+                self.Text_num.insert('insert', str(nownum))
+                self.writetext.insert('insert', content[1:])
+            if nownum <= 0:
+                showinfo(message='read over')
+
+        elif (global_var.get_value("folder") == "ReceiveFolder"):
+            # print("进入收件箱了...")
+
+            strname = ''
+            user = global_var.get_value('user')
+            if user == '1':
+                strname = '1.txt'
+            elif user == '2':
+                strname = '2.txt'
+            else:
+                showinfo(message='user is error')
+            fobj = open(strname, 'r')
+            row_len = len(fobj.readlines())
+            nownum = self.Text_num.get('1.0', 'end')
+
+            nownum = int(nownum)
+            nownum -= 1
+            print(nownum)
+
+            content = ''
+            if nownum >= 0 and strname == '1.txt':
+                content = linecache.getline(r'1.txt', nownum)
+            if nownum >= 0 and strname == '2.txt':
+                content = linecache.getline(r'2.txt', nownum)
+            if len(content) > 0:
+                self.Text_addressee.delete('1.0', "end")
+                self.Text_num.delete('1.0', "end")
+                self.writetext.delete('1.0', "end")
+
+                self.Text_addressee.insert('insert', content[:1])
+                self.Text_num.insert('insert', str(nownum))
+                self.writetext.insert('insert', content[1:])
+            if nownum <= 0:
                 showinfo(message='read over')
 
     def SendFolder(self):
@@ -183,8 +266,8 @@ class CheckMailWindow(Tk):
             fobj = open('1.txt', 'r')
             row_len = len(fobj.readlines())
             fobj.close()
-        elif user == '1':
-            fobj = open('1.txt', 'r')
+        elif user == '2':
+            fobj = open('2.txt', 'r')
             row_len = len(fobj.readlines())
             fobj.close()
 # >>>>>>> Stashed changes
