@@ -29,7 +29,6 @@ class CheckMailWindow(Tk):
         self.Button_Pre = Button(self, text="上一条", width=20, command=self.PreMail)
         self.Button_send = Button(self, text="下一条", width=20, command=self.NextMail)  ###绑定函数
 
-
         self.SendFolder = Button(self,text="发件箱",width=20,command=self.SendFolder)
         self.ReceiveFolder = Button(self, text = "收件箱",width = 20,command=self.ReceiveFolder)
 
@@ -124,7 +123,6 @@ class CheckMailWindow(Tk):
             nownum += 1
             print(nownum)
 
-
             content = ''
             if nownum <= row_len and strname == '1.txt':
                 content = linecache.getline(r'1.txt', nownum)
@@ -161,7 +159,6 @@ class CheckMailWindow(Tk):
             nownum = int(nownum)
             nownum -= 1
             print(nownum)
-
 
             content = ''
             if nownum >= 0 and strname == '1.txt':
